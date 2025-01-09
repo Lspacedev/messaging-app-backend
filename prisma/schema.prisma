@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  friends Friend[]
+  sentMessages Message[] @relation("sentMessages")
+  recievedMessages Message[] @relation("receivedMessages")
+  createdGroups Group[] @relation("createdGroups")
+  invitedGroups Group[] @relation("invitedGroups")
+  onlineStatus Boolean @default(false)
+  lastSeen DateTime @default(now())
+}
+model Friend {
+  id Int @id @default(autoincrement())
+  username String?
+  friendId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int 
+  
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  replies Reply[]
+  sender     User   @relation(name: "sentMessages", fields: [senderId], references: [id])
+  receiver   User   @relation(name: "receivedMessages", fields: [receiverId], references: [id])
+  senderId   Int 
+  receiverId Int
+  senderUsername String?
+  receiverUsername String?
+   
+}
+
+model Reply {
+  id Int @id @default(autoincrement())
+  text String
+  imageUrl String?
+  message Message @relation(fields: [messageId], references: [id])
+  messageId Int 
+  timestamp  DateTime @default(now()) 
+  authorId Int 
+  
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  groupName String
+  admin     User   @relation(name: "createdGroups", fields: [adminId], references: [id])
+  adminId   Int 
+  member User[] @relation("invitedGroups")
+  groupMessages GroupMessage[]
+
+}
+
+
+
+model GroupMessage {
+  id Int @id @default(autoincrement())
+  text String
+  imageUrl String?
+  group Group @relation(fields: [groupId], references: [id])
+  groupId Int 
+  timestamp  DateTime @default(now()) 
+  authorId Int 
+  
+}
+
+
