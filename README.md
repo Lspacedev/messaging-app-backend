@@ -1,6 +1,6 @@
 # PERN Messaging App | BACKEND
 
-Node Express Messaging App API that allows users to send and recieve messages.
+Messaging App API that allows users to send and recieve messages.
 
 ### Messaging App | Frontend
 
@@ -111,7 +111,6 @@ Endpoints
     5. POST /users/userId/messages
             Params: userId
 
-    Replies
     6. POST /users/userId/messages/:messageId
             Params: userId, messageId
             Inputs: text
