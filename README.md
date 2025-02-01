@@ -4,7 +4,7 @@ Messaging App API that allows users to send and recieve messages.
 
 ### Messaging App | Frontend
 
-[https://github.com/Lspacedev/messaging-app-backend](https://github.com/Lspacedev/messaging-app-backend)
+[https://github.com/Lspacedev/messaging-app-frontend](https://github.com/Lspacedev/messaging-app-frontend)
 
 ## Prerequisites
 
